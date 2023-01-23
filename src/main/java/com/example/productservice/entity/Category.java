@@ -14,8 +14,8 @@ public class Category {
 
     public static final String COLLECTION_NAME = "headphonesCategory";
 
-    @Id
-    //@Indexed(unique = true)
+    //@Id
+    @Indexed(unique = true)
     private String categoryId;
     private String categoryName;
     private Boolean deleteStatus;

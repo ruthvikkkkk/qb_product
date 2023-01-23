@@ -1,5 +1,6 @@
 package com.example.productservice.controller;
 
+import com.example.productservice.DTO.CategoryDTO;
 import com.example.productservice.DTO.ProductDTO;
 import com.example.productservice.entity.Category;
 import com.example.productservice.entity.Product;
@@ -7,7 +8,6 @@ import com.example.productservice.service.CategoryServiceInterface;
 import com.example.productservice.service.ProductServiceInterface;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,20 +24,20 @@ public class ProductController {
     ProductServiceInterface productService;
 
     @Autowired
-    CategoryServiceInterface categoryService;
+    CategoryController categoryController;
 
     @PostMapping("/add")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO){
         Product product = new Product();
-        Category category = new Category();
-        //categoryController.addCategory(productDTO.getProductCategoryDTO());
+        CategoryDTO category = new CategoryDTO();
+
         BeanUtils.copyProperties(productDTO, product);
-        BeanUtils.copyProperties(productDTO.getProductCategoryDTO(), category);
-        categoryService.addCategory(category);
-        product.setProductCategory(category);
-        String generatedID = productDTO.getProductCategoryDTO().getCategoryName().toUpperCase().substring(0,3) + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
-        product.setProductID(generatedID);
-        product.setCreatedDate(new Date());
+        product.setProductID(product.getProductCategory().getCategoryName().toUpperCase().substring(0,3) + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date())));
+
+        BeanUtils.copyProperties(product.getProductCategory(), category);
+        product.getProductCategory().setCategoryId(category.getCategoryName().toUpperCase().substring(0,3));
+        categoryController.addCategory(category);
+
         return new ResponseEntity<>(productService.addOrUpdateProduct(product), HttpStatus.CREATED);
     }
 
