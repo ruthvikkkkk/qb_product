@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,17 @@ public class CategoryController {
     @GetMapping("/findall")
     public ResponseEntity<List<CategoryDTO>> findAllCategories(){
         return new ResponseEntity<>(categoryService.findAllCategories(), HttpStatus.OK);
+    }
+
+    @GetMapping("/findallcategoryid")
+    public ResponseEntity<List<String>> findAllCategoryId(){
+        List<CategoryDTO> categories = categoryService.findAllCategories();
+        List<String> categoryIds = new ArrayList<>();
+        for(CategoryDTO c : categories){
+            categoryIds.add(c.getCategoryId());
+        }
+
+        return new ResponseEntity<>(categoryIds, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

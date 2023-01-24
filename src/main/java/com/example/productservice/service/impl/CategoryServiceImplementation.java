@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImplementation implements CategoryServiceInterface {
@@ -41,6 +42,17 @@ public class CategoryServiceImplementation implements CategoryServiceInterface {
         if(categoryRepository.existsById(categoryId)){
             categoryRepository.deleteById(categoryId);
             return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean existsById(String categoryId) {
+        List<Category> categoryList = categoryRepository.findAll();
+        for(Category c : categoryList){
+            if(c.getCategoryId().equals(categoryId)){
+                return true;
+            }
         }
         return false;
     }

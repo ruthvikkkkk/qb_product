@@ -24,7 +24,7 @@ public class ProductController {
     ProductServiceInterface productService;
 
     @Autowired
-    CategoryController categoryController;
+    CategoryServiceInterface categoryService;
 
     @PostMapping("/add")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO){
@@ -36,8 +36,10 @@ public class ProductController {
 
         BeanUtils.copyProperties(product.getProductCategory(), category);
         product.getProductCategory().setCategoryId(category.getCategoryName().toUpperCase().substring(0,3));
-        categoryController.addCategory(category);
 
+        if(!categoryService.existsById(product.getProductCategory().getCategoryId())) {
+            categoryService.addCategory(product.getProductCategory());
+        }
         return new ResponseEntity<>(productService.addOrUpdateProduct(product), HttpStatus.CREATED);
     }
 

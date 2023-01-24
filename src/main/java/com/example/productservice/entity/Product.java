@@ -2,10 +2,8 @@ package com.example.productservice.entity;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.Date;
 import java.util.Map;

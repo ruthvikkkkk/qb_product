@@ -8,4 +8,5 @@ public interface CategoryServiceInterface {
     List<CategoryDTO> findAllCategories();
     CategoryDTO addCategory(Category category);
     Boolean deleteCategory(String categoryId);
+    Boolean existsById(String categoryId);
 }
