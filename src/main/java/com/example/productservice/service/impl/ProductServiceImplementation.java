@@ -47,12 +47,18 @@ public class ProductServiceImplementation implements ProductServiceInterface {
     @Override
     public List<ProductDTO> getProductByCategory(String categoryId) {
         List<ProductDTO> productByCategory = new ArrayList<>();
-        for(Product product : productRepository.findAll()){
-            if(product.getProductCategory().getCategoryId().equals(categoryId)){
-                ProductDTO productDTO = new ProductDTO();
-                BeanUtils.copyProperties(product, productDTO);
-                productByCategory.add(productDTO);
-            }
+//        for(Product product : productRepository.findAll()){
+//            if(product.getProductCategory().getCategoryId().equals(categoryId)){
+//                ProductDTO productDTO = new ProductDTO();
+//                BeanUtils.copyProperties(product, productDTO);
+//                productByCategory.add(productDTO);
+//            }
+//        }
+
+        for(Product product : productRepository.findByProductCategory_CategoryId(categoryId)){
+            ProductDTO productDTO = new ProductDTO();
+            BeanUtils.copyProperties(product, productDTO);
+            productByCategory.add(productDTO);
         }
 
         return productByCategory;

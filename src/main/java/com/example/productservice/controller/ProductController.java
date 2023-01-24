@@ -2,7 +2,6 @@ package com.example.productservice.controller;
 
 import com.example.productservice.DTO.CategoryDTO;
 import com.example.productservice.DTO.ProductDTO;
-import com.example.productservice.entity.Category;
 import com.example.productservice.entity.Product;
 import com.example.productservice.service.CategoryServiceInterface;
 import com.example.productservice.service.ProductServiceInterface;
@@ -32,7 +31,7 @@ public class ProductController {
         CategoryDTO category = new CategoryDTO();
 
         BeanUtils.copyProperties(productDTO, product);
-        product.setProductID(product.getProductCategory().getCategoryName().toUpperCase().substring(0,3) + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date())));
+        product.setProductID(product.getProductCategory().getCategoryName().toUpperCase().substring(0,3) +  new Date().getTime());
 
         BeanUtils.copyProperties(product.getProductCategory(), category);
         product.getProductCategory().setCategoryId(category.getCategoryName().toUpperCase().substring(0,3));

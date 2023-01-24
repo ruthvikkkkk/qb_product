@@ -16,12 +16,12 @@ import java.util.Optional;
 public class CategoryServiceImplementation implements CategoryServiceInterface {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<CategoryDTO> findAllCategories() {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        for(Category category : categoryRepository.findAll()){
+        for (Category category : categoryRepository.findAll()) {
             CategoryDTO categoryDTO = new CategoryDTO();
             BeanUtils.copyProperties(category, categoryDTO);
             categoryDTOList.add(categoryDTO);
@@ -39,7 +39,7 @@ public class CategoryServiceImplementation implements CategoryServiceInterface {
 
     @Override
     public Boolean deleteCategory(String categoryId) {
-        if(categoryRepository.existsById(categoryId)){
+        if (categoryRepository.existsById(categoryId)) {
             categoryRepository.deleteById(categoryId);
             return true;
         }
@@ -49,8 +49,8 @@ public class CategoryServiceImplementation implements CategoryServiceInterface {
     @Override
     public Boolean existsById(String categoryId) {
         List<Category> categoryList = categoryRepository.findAll();
-        for(Category c : categoryList){
-            if(c.getCategoryId().equals(categoryId)){
+        for (Category c : categoryList) {
+            if (c.getCategoryId().equals(categoryId)) {
                 return true;
             }
         }
