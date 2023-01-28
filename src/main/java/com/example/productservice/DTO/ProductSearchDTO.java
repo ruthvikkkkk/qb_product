@@ -8,7 +8,8 @@ import lombok.ToString;
 public class ProductSearchDTO {
     private String productName;
     private String productBrand;
-    private String feature1;
-    private String feature2;
-    private String feature3;
+    private String highBass;
+    private String waterResistant;
+    private String aptX;
+
 }

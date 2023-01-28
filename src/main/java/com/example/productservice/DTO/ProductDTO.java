@@ -17,11 +17,11 @@ public class ProductDTO {
 
     private String productName;
     private String productBrand;
-    private Map<String, String> productUSP;
+    private String highBass;
+    private String waterResistant;
+    private String aptX;
     private String imageURL;
-    //Integer rating;
     private Category productCategory;
-    private Boolean deleteStatus;
     private String productDescription;
     private Date createdDate;
     private Date updatedDate;
