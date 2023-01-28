@@ -11,4 +11,5 @@ public interface ProductServiceInterface {
     ProductDTO getSingleProduct(String productId);
     List<ProductDTO> getProductByCategory(String CategoryId);
     List<Product> getAll();
+    List<Product> getProductBySearch(String searchTerm);
 }

@@ -2,6 +2,7 @@ package com.example.productservice.controller;
 
 import com.example.productservice.DTO.CategoryDTO;
 import com.example.productservice.DTO.ProductDTO;
+import com.example.productservice.DTO.ProductSearchDTO;
 import com.example.productservice.entity.Product;
 import com.example.productservice.service.CategoryServiceInterface;
 import com.example.productservice.service.ProductServiceInterface;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,17 +30,17 @@ public class ProductController {
     @PostMapping("/add")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO){
         Product product = new Product();
-        CategoryDTO category = new CategoryDTO();
-
+//        CategoryDTO category = new CategoryDTO();
+//
         BeanUtils.copyProperties(productDTO, product);
-        product.setProductID(product.getProductCategory().getCategoryName().toUpperCase().substring(0,3) +  new Date().getTime());
-
-        BeanUtils.copyProperties(product.getProductCategory(), category);
-        product.getProductCategory().setCategoryId(category.getCategoryName().toUpperCase().substring(0,3));
-
-        if(!categoryService.existsById(product.getProductCategory().getCategoryId())) {
-            categoryService.addCategory(product.getProductCategory());
-        }
+//        product.setProductID(product.getProductCategory().getCategoryName().toUpperCase().substring(0,3) +  new Date().getTime());
+//
+//        BeanUtils.copyProperties(product.getProductCategory(), category);
+//        product.getProductCategory().setCategoryId(category.getCategoryName().toUpperCase().substring(0,3));
+//
+//        if(!categoryService.existsById(product.getProductCategory().getCategoryId())) {
+//            categoryService.addCategory(product.getProductCategory());
+//        }
         return new ResponseEntity<>(productService.addOrUpdateProduct(product), HttpStatus.CREATED);
     }
 
@@ -60,5 +62,17 @@ public class ProductController {
     @GetMapping("/getall")
     public ResponseEntity<List<Product>> getAll(){
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/searchProduct/{searchTerm}")
+    public ResponseEntity<List<ProductSearchDTO>> getProductBySearch(@PathVariable("searchTerm") String searchTerm) {
+        List<Product> productList = productService.getProductBySearch(searchTerm);
+        List<ProductSearchDTO> productSearchDTOS = new ArrayList<>();
+        for (Product product : productList) {
+            ProductSearchDTO productSearchDTO = new ProductSearchDTO();
+            BeanUtils.copyProperties(product, productSearchDTO);
+            productSearchDTOS.add(productSearchDTO);
+        }
+        return new ResponseEntity<List<ProductSearchDTO>>(productSearchDTOS, HttpStatus.OK);
     }
 }

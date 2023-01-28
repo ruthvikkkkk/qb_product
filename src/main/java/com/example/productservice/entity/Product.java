@@ -24,7 +24,7 @@ public class Product {
     private String imageURL;
     //Integer rating;
     private Category productCategory;
-    private Boolean deleteStatus;
+    //private Boolean deleteStatus;
     private String productDescription;
     private Date createdDate;
     private Date updatedDate;
